@@ -1,0 +1,86 @@
+<div class="navbar">
+    <h2>Transaction</h2>
+</div>
+
+<div class="main-container">
+    <div class="container">
+        <h3>Todo Transactions</h3>
+        <form [formGroup]="todoForm" (ngSubmit)="onSubmitExpense()" class="input-form">
+            <div class="form-group">
+                <select formControlName="month" id="month" class="form-control" (change)="onChangeExpense($event)">
+                    <option value="" disabled>Select Month</option>
+                    <option *ngFor="let month of months">{{month}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" placeholder="date" formControlName="date"
+                    [attr.min]="minDateTime" [class.disabled-dropdown]="!monthSelected">
+            </div>
+            <div class="total-todoTrans">
+                Total Todo's for {{ selectedMonth }}: Rs.{{ calculateTotalExpense(selectedMonth) }}
+            </div>
+            <div class="form-group">
+                <label for="expenseType">Transaction Type:</label>
+                <input type="text" formControlName="expenseType" id="expenseType" class="form-control"
+                    placeholder="Enter Transaction Type" [class.disabled-dropdown]="!monthSelected">
+            </div>
+
+            <div class="form-group">
+                <label for="expenseAmount">Amount:</label>
+                <input type="number" formControlName="expenseAmount" id="expenseAmount" class="form-control"
+                    placeholder="Enter amount" [class.disabled-dropdown]="!monthSelected" [min]="1">
+            </div>
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary" (click)="onSubmitExpense()"
+                    [class.disabled-dropdown]="!monthSelected">Add Transaction</button>
+            </div>
+        </form>
+        <hr>
+        <h3>Transaction List - {{ selectedMonth }}</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <!-- <tbody>
+                <tr *ngFor="let todoTrans of getFilteredExpenses()">
+                    <td [ngClass]="{'strikeout': todoTrans.selected}" (click)="toggleSelection(todoTrans)">
+                        {{ todoTrans.expenseType }}
+                    </td>
+                    <td>{{ todoTrans.expenseAmount }}</td>
+                </tr>
+            </tbody> -->
+
+            <tbody>
+                <tr *ngFor="let income of getFilteredTransactions(); let i = index">
+                    <td>
+                        <span *ngIf="editingIndex !== i">{{ income.expenseType }}</span>
+                        <input *ngIf="editingIndex === i" [(ngModel)]="editingTransaction.expenseType">
+                    </td>
+                    <td>
+                        <span *ngIf="editingIndex !== i">{{ income.expenseAmount}}</span>
+                        <input *ngIf="editingIndex === i" [(ngModel)]="editingTransaction.expenseAmount">
+                    </td>
+                    <td>
+                        <fa-icon *ngIf="editingIndex !== i" [icon]="faEdit"
+                            (click)="editTransaction(i)"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon *ngIf="editingIndex === i" [icon]="faSave"
+                            (click)="saveTransaction(i)"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon *ngIf="editingIndex === i" [icon]="faTimes"
+                            (click)="cancelEdit()"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon [icon]="faTrash" (click)="deleteTransaction(i)"></fa-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="input-form">
+            <button class="btn btn-primary" (click)="onBack()">Back</button>
+            <div class="form-group">
+            </div>
+            <button class="btn btn-primary" (click)="saveForm()">Save</button>
+        </div>
+    </div>
+</div>

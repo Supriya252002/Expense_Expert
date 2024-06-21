@@ -1,0 +1,11 @@
+<div class="theme-color">
+  <app-navbar
+    [collapsed]="isSideNavCollapsed"
+    [screenWidth]="screenWidth"
+  ></app-navbar>
+  <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+  <app-actual-body
+    [collapsed]="isSideNavCollapsed"
+    [screenWidth]="screenWidth"
+  ></app-actual-body>
+</div>

@@ -1,0 +1,21 @@
+.body {
+  width: calc(100% - 13.188rem);
+  margin-left: 13.188rem;
+  transition: all 0.5s ease;
+  top: 70px;
+  height: calc(100% - 70px);
+  /* right: 1rem; */
+  position: fixed;
+  z-index: 0;
+  background-color: #ffffff;
+}
+
+.body-trimmed {
+  width: calc(100% - 13.188rem);
+  margin-left: 13.188rem;
+}
+
+.body-md-screen {
+  width: calc(100% - 5rem);
+  margin-left: 5rem;
+}

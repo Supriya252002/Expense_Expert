@@ -1,0 +1,147 @@
+<div
+  id="sideBar"
+  class="sidenav"
+  [ngClass]="collapsed ? 'sidenav-collapsed' : ''"
+>
+  <div class="logo-container">
+    <div class="logo" [ngClass]="collapsed ? '' : ' '">
+      <h3 class="logo-heading">FSL</h3>
+      <span
+        (click)="toggleCollapse()"
+        class="material-symbols-outlined custome-toggle"
+      >
+        menu
+      </span>
+    </div>
+  </div>
+  <!-- <div class="toggle-box">
+    <button
+      *ngIf="collapsed"
+      (click)="toggleCollapse()"
+      class="btn btn-sm toggle-btn"
+    >
+      <span class="material-symbols-outlined"> chevron_left </span>
+    </button>
+    <button
+      *ngIf="!collapsed"
+      (click)="toggleCollapse()"
+      class="btn btn-sm toggle-btn"
+    >
+      <span class="material-symbols-outlined"> chevron_right </span>
+    </button>
+  </div> -->
+  <!-- *ngIf="isAdmin" -->
+  <ul class="sidenav-nav mt-10" style="overflow-y: auto">
+    <li
+      class="sidenav-nav-item"
+      *ngFor="let data of sideBarData"
+      [class.selected]="
+        selectedParent === data.label && data.items && data.items.length > 0
+      "
+      (click)="mainMenu(data)"
+    >
+      <a
+        class="sidenav-nav-link"
+        (click)="handleClick(data)"
+        *ngIf="data.items && data.items.length > 0"
+      >
+        <i class="sidenav-link-icon">
+          <span class="material-symbols-outlined">
+            {{ data.icon }}
+          </span>
+        </i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+        <i *ngIf="data.items && collapsed" class="menu-collapse-icon">
+          <span class="material-symbols-outlined mt-1">
+            {{ !data.expanded ? "expand_more" : "expand_less" }}
+          </span>
+        </i>
+      </a>
+
+      <a
+        class="sidenav-nav-link"
+        *ngIf="!data.items || (data.items && data.items.length === 0)"
+        [routerLink]="[data.routeLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon">
+          <span class="material-symbols-outlined">
+            {{ data.icon }}
+          </span>
+        </i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+      </a>
+
+      <div class="" *ngIf="collapsed && data.items && data.items.length > 0">
+        <app-sublevel-menu
+          [data]="data"
+          [collapsed]="collapsed"
+          [multiple]="multiple"
+          [expanded]="data.expanded"
+        ></app-sublevel-menu>
+      </div>
+    </li>
+  </ul>
+
+  <ul *ngIf="isVendor" class="sidenav-nav" style="overflow-y: auto">
+    <li
+      class="sidenav-nav-item"
+      *ngFor="let data of sideBarData"
+      [class.selected]="
+        selectedParent === data.label && data.items && data.items.length > 0
+      "
+      (click)="mainMenu(data)"
+    >
+      <a
+        class="sidenav-nav-link"
+        (click)="handleClick(data)"
+        *ngIf="data.items && data.items.length > 0"
+      >
+        <i class="sidenav-link-icon">
+          <span class="material-symbols-outlined">
+            {{ data.icon }}
+          </span>
+        </i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+        <i *ngIf="data.items && collapsed" class="menu-collapse-icon">
+          <span class="material-symbols-outlined mt-1">
+            {{ !data.expanded ? "expand_more" : "expand_less" }}
+          </span>
+        </i>
+      </a>
+
+      <a
+        class="sidenav-nav-link"
+        *ngIf="!data.items || (data.items && data.items.length === 0)"
+        [routerLink]="[data.routeLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon">
+          <span class="material-symbols-outlined">
+            {{ data.icon }}
+          </span>
+        </i>
+        <span class="sidenav-link-text mt-1" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+      </a>
+
+      <div class="" *ngIf="collapsed && data.items && data.items.length > 0">
+        <app-sublevel-menu
+          [data]="data"
+          [collapsed]="collapsed"
+          [multiple]="multiple"
+          [expanded]="data.expanded"
+        ></app-sublevel-menu>
+      </div>
+    </li>
+  </ul>
+</div>

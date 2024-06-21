@@ -1,0 +1,102 @@
+<app-side-nav></app-side-nav>
+<div class="container">
+    <div class="card-container">
+        <!---Income Card-->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon income-icon"><mat-icon>attach_money</mat-icon></span>
+                <h2>Income</h2>
+            </div>
+            <hr>
+            <div class="income-details">
+                <div class="month">
+                    <h2>Previous Month Income</h2>
+                    <li *ngFor="let entry of lastmonthIncomeEntries">
+                        {{ entry[0] }}: {{ entry[1] }}
+                    </li>
+
+                </div>
+                <div class="month">
+                    <h2>Current Month</h2>
+                    <p>Rs.{{ totalcurrentmonthincome }}</p>
+                </div>
+
+                <button class="button" (click)="onIncome()">View</button>
+            </div>
+        </div>
+
+        <!---Expense Card-->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon expense-icon"><mat-icon>monthly_off</mat-icon></span>
+                <h2>Expense</h2>
+            </div>
+            <hr>
+            <div class="income-details">
+                <div class="month">
+                    <h2>Previous Month Expense</h2>
+                    <!-- <ul>
+                        <li *ngFor="let month of Object.keys(lastmonthExpense)">{{ month }}: {{ lastmonthExpense[month] }}</li>
+                    </ul> -->
+                    <li *ngFor="let entry of lastmonthExpenseEntries">
+                        {{ entry[0] }}: {{ entry[1] }}
+                    </li>
+                </div>
+                <div class="month">
+                    <h2>Current Month</h2>
+                    <p>Rs.{{totalcurrentmonthexpense}}</p>
+                </div>
+                <button class="button" (click)="onExpense()">View</button>
+            </div>
+        </div>
+
+        <!---To-do Transaction-->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon todo-icon"><mat-icon>assignment</mat-icon></span>
+                <h2>To-do Transaction</h2>
+            </div>
+            <hr>
+            <div class="income-details">
+                <div class="month">
+                    <h2>Previous Month Transaction</h2>
+                    <ul>
+                        <li *ngFor="let item of todoTransaction">
+                            <span class="transaction-status"><mat-icon>hourglass_empty</mat-icon></span>
+                            <span class="transaction-details">{{ item.description }}</span>
+                        </li>
+                    </ul>
+                    <button class="button" (click)="onTransaction()">View</button>
+                </div>
+            </div>
+        </div>
+
+        <!---Total-->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon total-icon"><mat-icon>timeline</mat-icon></span>
+                <h2>Total</h2>
+            </div>
+            <hr>
+            <div class="total-details">
+                <div class="total-items">
+                    <span class="icon income-icon"><mat-icon>attach_money</mat-icon></span>
+                    <h2>Current Month Income</h2>
+                    <p>Rs.{{totalcurrentmonthincome}}</p>
+                </div>
+
+                <div class="total-items">
+                    <span class="icon expense-icon"><mat-icon>monthly_off</mat-icon></span>
+                    <h2>Current Month Expense</h2>
+                    <p>Rs.{{ totalcurrentmonthexpense }}</p>
+                </div>
+                <hr class="total-line">
+                <div class="total-items">
+                    <span class="icon trans-icon"><mat-icon>account_balance_wallet</mat-icon></span>
+                    <h2>Current Month Savings</h2>
+                    <p>Rs.{{ totalcurrentmonthsavings }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

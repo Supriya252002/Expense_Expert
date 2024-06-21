@@ -1,0 +1,91 @@
+<div class="navbar">
+    <h2>Income</h2>
+</div>
+
+<div class="main-container">
+    <div class="container">
+        <h2>Income</h2>
+
+        <form class="input-form" [formGroup]="incomeForm" (ngSubmit)="IncomeSubmitted()">
+            <div class="form-group">
+                <select class="form-control" formControlName="month" id="month" (change)="OnChange($event)">
+                    <option value="" disabled>Select Month</option>
+                    <option *ngFor="let month of months">{{month}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" placeholder="date" formControlName="date"
+                    [attr.min]="minDateTime" [class.disabled-dropdown]="!monthSelected">
+            </div>
+
+            <div class="form-group">
+                <div class="total-income" #totalincome>
+                    Total Income:{{selectedMonth}}:Rs.{{CalculatedtotalIncome(selectedMonth)}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Investment</label>
+                <select class="form-control" id="investment" formControlName="investment"
+                    [class.disabled-dropdown]="!monthSelected">
+                    <option value="" disabled>Select Investment</option>
+                    <option *ngFor="let investment of investments">{{investment}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Source Of Income</label>
+                <select class="form-control" id="source" formControlName="source"
+                    [class.disabled-dropdown]="!monthSelected">
+                    <option value="" disabled>Select SOI</option>
+                    <option *ngFor="let source of sourceOfIncome">{{source}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" formControlName="amount" class="form-control"
+                    [disabled]="!monthSelected" [min]="1">
+            </div>
+
+            <div class="input-form">
+                <button class="btn btn-primary" (click)="onSave()">Save</button>
+
+                <button class="btn btn-primary" (click)="onBack()">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <table class="table" *ngIf="selectedMonth">
+            <thead>
+                <tr>
+                    <th>Source of Income</th>
+                    <th>Amount</th>
+                    <th>Investment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let income of getFilteredIncomes(); let i = index">
+                    <ng-container *ngIf="editingIndex !== i; else editTemplate">
+                        <td>{{ income.source }}</td>
+                        <td>{{ income.amount }}</td>
+                        <td>{{ income.investment }}</td>
+                        <td>
+                            <fa-icon [icon]="faEdit" (click)="editIncome(i)"></fa-icon>&nbsp;&nbsp;
+                            <fa-icon [icon]="faTrash" (click)="deleteIncome(i)"></fa-icon>
+                        </td>
+                    </ng-container>
+                    <ng-template #editTemplate>
+                        <td><input [(ngModel)]="editingIncome.source" class="form-control"></td>
+                        <td><input [(ngModel)]="editingIncome.amount" class="form-control" type="number"></td>
+                        <td><input [(ngModel)]="editingIncome.investment" class="form-control"></td>
+                        <td>
+                            <fa-icon [icon]="faSave" (click)="saveIncome(i)"></fa-icon>&nbsp;&nbsp;
+                            <fa-icon [icon]="faTimes" (click)="cancelEdit()"></fa-icon>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

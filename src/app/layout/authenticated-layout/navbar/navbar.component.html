@@ -1,0 +1,37 @@
+<div
+  [ngClass]="
+    collapsed
+      ? 'navbar d-flex align-items-center justify-content-between'
+      : 'navbar-collapsed d-flex align-items-center justify-content-between'
+  "
+>
+  <div class="active-component">
+    <h1>{{ navbarHeading }}</h1>
+  </div>
+  <div class="nav-user pointer">
+    <div ngbDropdown class="d-inline-block">
+      <div
+        style="display: inline-flex; gap: 0.5rem"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <div
+          class="nav-name d-flex"
+          (click)="onDropdownClicked()"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          <div class="d-flex flex-column">
+            <span class="nav-user-name">{{ "Dhiraj" }}</span>
+            <br />
+            <span class="nav-user-role">{{ "Admin" }}</span>
+          </div>
+          <span class="material-symbols-outlined"> expand_more </span>
+        </div>
+      </div>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>

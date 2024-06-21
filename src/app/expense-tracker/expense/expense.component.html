@@ -1,0 +1,93 @@
+<div class="navbar">
+    <h2>EXPENSE</h2>
+</div>
+
+<div class="main-container">
+    <div class="container">
+        <h2>Expense</h2>
+        <form [formGroup]="expenseForm" (ngSubmit)="onSubmitExpense()" class="input-form">
+            <div class="form-group">
+                <select formControlName="month" id="month" class="form-control" (change)="onChangeExpense($event)">
+                    <option value="" disabled>Select Month</option>
+                    <option *ngFor="let month of months">{{month}}</option>
+                    <!-- <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option> -->
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" placeholder="date" formControlName="date"
+                    [attr.min]="minDateTime" [class.disabled-dropdown]="!monthSelected">
+            </div>
+            <div class="total-expense">
+                Total expense for {{ selectedMonth }}: Rs.{{calculateTotalExpense(selectedMonth) }}
+            </div>
+
+            <div class="form-group">
+                <label for="expenseType">Expense Type:</label>
+                <select formControlName="expenseType" id="expenseType" class="form-control"
+                    [class.disabled-dropdown]="!monthSelected">
+                    <option value="" disabled>Select Expense Type</option>
+                    <option *ngFor="let expense of expenseTypes">{{expense}}</option>
+                    <!-- <option value="Rent">Rent</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Utilities">Utilities</option> -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="expenseAmount">Amount:</label>
+                <input type="number" formControlName="expenseAmount" id="expenseAmount" class="form-control"
+                    placeholder="Enter amount" [class.disabled-dropdown]="!monthSelected" [min]="1">
+            </div>
+            <div class="form-group save-btn">
+                <button class="btn btn-primary" (click)="onSave()">Add Expense</button>
+            </div>
+            <!-- <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary" (click)="onSubmitExpense()"
+                    [class.disabled-dropdown]="!monthSelected">Add Expense</button>
+            </div> -->
+            <div class="input-form">
+                <button class="btn btn-primary" (click)="onBack()">Back</button>
+            </div>
+        </form>
+        <hr>
+        <h3>Expense List - {{ selectedMonth }}</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Expense Type</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let expense of getFilteredExpenses(); let i = index">
+                    <td>
+                        <span *ngIf="editingIndex !== i">{{ expense.expenseType }}</span>
+                        <input *ngIf="editingIndex === i" [(ngModel)]="editingExpense.expenseType">
+                    </td>
+                    <td>
+                        <span *ngIf="editingIndex !== i">{{ expense.expenseAmount }}</span>
+                        <input *ngIf="editingIndex === i" [(ngModel)]="editingExpense.expenseAmount">
+                    </td>
+                    <td>
+                        <fa-icon *ngIf="editingIndex !== i" [icon]="faEdit"
+                            (click)="editExpense(i)"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon *ngIf="editingIndex === i" [icon]="faSave"
+                            (click)="saveExpense(i)"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon *ngIf="editingIndex === i" [icon]="faTimes"
+                            (click)="cancelEdit()"></fa-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <fa-icon [icon]="faTrash" (click)="deleteExpense(i)"></fa-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="input-form">
+            <button class="btn btn-primary" (click)="onBack()">Back</button>
+            <div class="form-group">
+            </div>
+            <button class="btn btn-primary" (click)="saveForm()">Save</button>
+        </div> -->
+    </div>
+</div>

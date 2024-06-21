@@ -1,0 +1,64 @@
+<div class="navbar">
+    <h2>Expense Tracker</h2>
+</div>
+
+<div class="login-container">
+    <form *ngIf="activeForm === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <h3>Login</h3>
+        <div class="form-group">
+            <input type="text" placeholder="Enter Email" formControlName="email">
+        </div>
+        <div class="text-danger"
+            *ngIf="control['email'].invalid && (control['email'].dirty || control['email'].touched)">
+            <small>This is mandatory Field</small>
+        </div>
+        <div class="form-group">
+            <input [type]="isVisible ?'text':'password'" placeholder="Enter Password" class="form-control"
+                formControlName="password" >
+            <span class="material-icons toggle-icon" (click)="toggleVisible()">
+                {{isVisible?"visibility":"visibility_off"}}
+            </span>
+        </div>
+        <div class="text-danger"
+            *ngIf="control['password'].invalid && (control['email'].dirty ||control['email'].touched)">
+            <small>This is mandatory Field</small>
+        </div>
+        <button type="submit">Login</button>
+        <p class="toggle-btn" (click)="toggleForm('register')">Don't Have an Account? <span
+                class="highlighted">Register</span></p>
+    </form>
+
+    <form *ngIf="activeForm === 'register'" [formGroup]="registrationForm" (ngSubmit)="onRegister()">
+        <h3>Register</h3>
+        <div class="form-group">
+            <input type="text" placeholder="Enter Name" formControlName="name">
+        </div>
+        <div class="text-danger" *ngIf="control['name'].invalid && (control['name'].dirty || control['name'].touched)">
+            <small>This is Mandatory Field</small>
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Enter Email" formControlName="email">
+        </div>
+        <div class="text-danger"
+            *ngIf="control['email'].invalid && (control['email'].dirty || control['email'].touched)">
+            <small>This is Mandatory Field</small>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Enter Password" formControlName="password">
+        </div>
+        <div class="text-danger"
+            *ngIf="control['password'].invalid && (control['password'].dirty || control['password'].touched)">
+            <small>This is Mandatory Field</small>
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Enter Contact_No" formControlName="contactno">
+        </div>
+        <div class="text-danger"
+            *ngIf="control['contactno'].invalid && (control['contactno'].dirty || control['contactno'].touched)">
+            <small>This is Mandatory Field</small>
+        </div>
+        <button type="submit">Register</button>
+        <p class="toggle-btn" (click)="toggleForm('login')">Already have an account? <span
+                class="highlighted">Login</span></p>
+    </form>
+</div>
